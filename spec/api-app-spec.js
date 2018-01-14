@@ -112,6 +112,13 @@ describe('app module', () => {
     })
   })
 
+  describe('app.setLocale()', () => {
+    it('should set the locale', () => {
+      app.setLocale('fr')
+      assert.equal(app.getLocale(), 'fr')
+    })
+  })
+
   describe('app.isInApplicationsFolder()', () => {
     before(function () {
       if (process.platform !== 'darwin') {

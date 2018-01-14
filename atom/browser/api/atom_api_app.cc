@@ -855,6 +855,7 @@ void App::SetDesktopName(const std::string& desktop_name) {
 void App::SetLocale(std::string locale) {
   std::string fallback_locale = g_browser_process->GetApplicationLocale();
 
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   std::string loaded_locale = rb.ReloadLocaleResources(locale);
 
