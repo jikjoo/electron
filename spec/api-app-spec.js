@@ -113,6 +113,11 @@ describe('app module', () => {
   })
 
   describe('app.setLocale()', () => {
+    it('shouldnt change locale if an invalid locale is passed', () => {
+      const loc = app.getLocale()
+      app.setLocale('asdfghjkl')
+      assert.equal(app.getLocale(), loc)
+    })
     it('should set the locale', () => {
       app.setLocale('fr')
       assert.equal(app.getLocale(), 'fr')
