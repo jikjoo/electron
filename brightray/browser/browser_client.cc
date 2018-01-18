@@ -27,6 +27,7 @@ base::LazyInstance<std::string>::DestructorAtExit
     g_io_thread_application_locale = LAZY_INSTANCE_INITIALIZER;
 
 std::string g_application_locale;
+bool g_locale_is_set = false;
 
 void SetApplicationLocaleOnIOThread(const std::string& locale) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -45,6 +46,14 @@ void BrowserClient::SetApplicationLocale(const std::string& locale) {
     g_io_thread_application_locale.Get() = locale;
   }
   g_application_locale = locale;
+}
+
+void BrowserClient::SetLocaleOverridden() {
+  g_locale_is_set = true;
+}
+
+bool BrowserClient::IsLocaleOverridden() {
+  return g_locale_is_set;
 }
 
 BrowserClient* BrowserClient::Get() {

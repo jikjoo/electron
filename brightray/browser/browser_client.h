@@ -21,6 +21,8 @@ class BrowserClient : public content::ContentBrowserClient {
  public:
   static BrowserClient* Get();
   static void SetApplicationLocale(const std::string& locale);
+  static void SetLocaleOverridden();
+  static bool IsLocaleOverridden();
 
   BrowserClient();
   ~BrowserClient();

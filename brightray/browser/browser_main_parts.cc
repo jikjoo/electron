@@ -221,7 +221,9 @@ void BrowserMainParts::ToolkitInitialized() {
 
 void BrowserMainParts::PreMainMessageLoopStart() {
 #if defined(OS_MACOSX)
+if(!brightray::BrowserClient::IsLocaleOverridden()) {
   l10n_util::OverrideLocaleWithCocoaLocale();
+}
 #endif
   InitializeResourceBundle("");
 #if defined(OS_MACOSX)

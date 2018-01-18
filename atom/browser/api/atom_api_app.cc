@@ -858,10 +858,13 @@ void App::SetLocale(std::string locale) {
   base::ThreadRestrictions::ScopedAllowIO allow_io;
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   std::string loaded_locale = rb.ReloadLocaleResources(locale);
+  printf("HELLO I AM %s\n", loaded_locale.c_str());
 
   if (loaded_locale != "") {
     brightray::BrowserClient::SetApplicationLocale(locale);
     g_browser_process->SetApplicationLocale(locale);
+
+    brightray::BrowserClient::SetLocaleOverridden();
   } else {
     rb.ReloadLocaleResources(fallback_locale);
   }
