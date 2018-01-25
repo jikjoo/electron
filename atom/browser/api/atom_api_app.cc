@@ -852,12 +852,12 @@ void App::SetDesktopName(const std::string& desktop_name) {
 #endif
 }
 
-void App::SetLocale(std::string locale) {
-  std::string fallback_locale = g_browser_process->GetApplicationLocale();
+void App::SetLocale(const std::string& locale) {
+  const std::string fallback_locale = g_browser_process->GetApplicationLocale();
 
   base::ThreadRestrictions::ScopedAllowIO allow_io;
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-  std::string loaded_locale = rb.ReloadLocaleResources(locale);
+  const std::string loaded_locale = rb.ReloadLocaleResources(locale);
 
   if (loaded_locale == locale) {
     brightray::BrowserClient::SetApplicationLocale(locale);
