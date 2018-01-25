@@ -92,6 +92,8 @@ class Menu : public mate::TrackableObject<Menu>,
   bool IsEnabledAt(int index) const;
   bool IsVisibleAt(int index) const;
 
+  void MenuWillClose();
+
   // Stored delegate methods.
   base::Callback<bool(int)> is_checked_;
   base::Callback<bool(int)> is_enabled_;
