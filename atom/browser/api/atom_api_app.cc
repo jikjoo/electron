@@ -859,7 +859,7 @@ void App::SetLocale(std::string locale) {
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   std::string loaded_locale = rb.ReloadLocaleResources(locale);
 
-  if (loaded_locale != "" && loaded_locale == locale) {
+  if (loaded_locale == locale) {
     brightray::BrowserClient::SetApplicationLocale(locale);
     g_browser_process->SetApplicationLocale(locale);
   } else {

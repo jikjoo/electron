@@ -76,7 +76,6 @@ void Menu::ExecuteCommand(int command_id, int flags) {
 }
 
 void Menu::MenuWillShow(ui::SimpleMenuModel* source) {
-  printf("HI\n");
   menu_will_show_.Run();
 }
 
