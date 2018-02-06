@@ -853,18 +853,21 @@ void App::SetDesktopName(const std::string& desktop_name) {
 }
 
 void App::SetLocale(const std::string& locale) {
-  const std::string fallback_locale = g_browser_process->GetApplicationLocale();
-
-  base::ThreadRestrictions::ScopedAllowIO allow_io;
-  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-  const std::string loaded_locale = rb.ReloadLocaleResources(locale);
-
-  if (loaded_locale == locale) {
-    brightray::BrowserClient::SetApplicationLocale(locale);
-    g_browser_process->SetApplicationLocale(locale);
-  } else {
-    rb.ReloadLocaleResources(fallback_locale);
+  if (!g_browser_process->GetApplicationLocale().empty() ||
+      Browser::Get()->is_ready()) {
+    return;
   }
+
+  std::string loaded_locale = l10n_util::GetApplicationLocale(locale);
+  if (loaded_locale != locale) {
+#if defined(OS_MACOSX)
+    l10n_util::OverrideLocaleWithCocoaLocale();
+#endif
+    loaded_locale = l10n_util::GetApplicationLocale("");
+  }
+
+  brightray::BrowserClient::SetApplicationLocale(locale);
+  g_browser_process->SetApplicationLocale(locale);
 }
 
 std::string App::GetLocale() {

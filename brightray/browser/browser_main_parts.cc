@@ -221,7 +221,8 @@ void BrowserMainParts::ToolkitInitialized() {
 
 void BrowserMainParts::PreMainMessageLoopStart() {
 #if defined(OS_MACOSX)
-  l10n_util::OverrideLocaleWithCocoaLocale();
+  if (BrowserClient::Get()->GetApplicationLocale().empty())
+    l10n_util::OverrideLocaleWithCocoaLocale();
 #endif
   InitializeResourceBundle("");
 #if defined(OS_MACOSX)
@@ -277,7 +278,8 @@ int BrowserMainParts::PreCreateThreads() {
     layout_provider_.reset(new views::LayoutProvider());
 
   // Initialize the app locale.
-  BrowserClient::SetApplicationLocale(l10n_util::GetApplicationLocale(""));
+  if (BrowserClient::Get()->GetApplicationLocale().empty())
+    BrowserClient::SetApplicationLocale(l10n_util::GetApplicationLocale(""));
 
   // Manage global state of net and other IO thread related.
   io_thread_ = base::MakeUnique<IOThread>();
